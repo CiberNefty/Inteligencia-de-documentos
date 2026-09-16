@@ -1,0 +1,15 @@
+<h1>Mis documentos</h1>
+<ul>
+    {% for doc in documentos %}
+        <li>
+            {{ doc.titulo }} — 
+            {{ doc.area }} — 
+            {% if doc.procesado %}
+                ✅ Procesado
+            {% else %}
+                ⏳ Pendiente
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'subir_documento' %}">Subir nuevo documento</a>
