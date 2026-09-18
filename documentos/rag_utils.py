@@ -55,9 +55,13 @@ def procesar_documento(documento):
     texto = extraer_texto_pdf(documento.archivo.path)
     chunks = trocear_texto(texto)
 
+
+    if not chunks or len(chunks == 0): 
+        raise ValueError("El documento esta errado o se enceuntra vacio sin texto.")
+
     model = obtener_modelo()
     embeddings = model.encode(chunks)
-
+         
     for i, (chunk, emb) in enumerate(zip(chunks, embeddings)):
         Fragmento.objects.create(
             documento=documento,

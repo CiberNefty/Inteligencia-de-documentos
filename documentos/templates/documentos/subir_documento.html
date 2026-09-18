@@ -3,4 +3,8 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Subir</button>
+
+    {% if error_documento %}
+        <p style="color: red;"><strong>{{ error_documento }}</strong></p>
+    {% endif%}
 </form>

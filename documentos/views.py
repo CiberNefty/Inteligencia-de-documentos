@@ -10,6 +10,8 @@ from .models import Documento, Conversacion, Mensaje
 
 @login_required
 def subir_documento(request):
+    error_documento = None
+    
     if request.method == "POST":
         form = DocumentoForm(request.POST, request.FILES)
         if form.is_valid():
@@ -17,13 +19,16 @@ def subir_documento(request):
             documento.usuario = request.user # <- Aqui me asigna el usuario de una vez
             documento.save()
 
-            procesar_documento(documento)
-
-            return redirect("lista_documentos")
+            try:                   
+                procesar_documento(documento)
+                return redirect("lista_documentos") #<- Solo redirige sso NO hubo error
+            except Exception as e:
+                error_documento = str(e) # <- 
     else:
         form = DocumentoForm()
     return render(request, 'documentos/subir_documento.html', {
-        'form' : form
+        'form' : form, 
+        "error_documento":error_documento
     })
 
 @login_required
