@@ -1,3 +1,7 @@
+{% entends 'base.html' %}
+{% block title %}CHATEA CON TU DOCUMENTO{% endblock %}
+
+{% block contenido %}
 <h1>Chat {{ documento.titulo }}</h1>
 
 <div>
@@ -16,3 +20,5 @@
 </form>
 
 <a href="{% url 'lista_documentos' %}"><strong>Volver a mis documentos</strong></a>
+
+{% endblock %}

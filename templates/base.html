@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titulo %}Inteligencia de Documentos{% endblock %}</title>
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'lista_documentos' %}">Mis documentos</a>
+            <a href="{% url 'subir_documento' %}">Subir documento</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block contenido %}
+        {% endblock %}
+    </main>
+</body>
+</html>
