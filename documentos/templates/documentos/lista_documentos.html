@@ -9,6 +9,9 @@
             {% else %}
                 ⏳ Pendiente
             {% endif %}
+            {% if doc.procesado %}
+                - <a href="{% url 'chat_documento' documento_id=doc.id %}">CHATEAR</a>
+            {% endif %}
         </li>
     {% endfor %}
 </ul>

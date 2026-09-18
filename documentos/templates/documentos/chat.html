@@ -1,0 +1,15 @@
+<h1>Chat {{ documento.titulo }}</h1>
+
+<div>
+    {% for mensaje in mensajes %}
+        <p><strong>{{ mensaje.get_rol_display }}:</strong> {{ mensaje.contenido }}</p>
+    {% endfor %}
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="pregunta" placeholder="Escribí tu pregunta..." required>
+    <button type="submit">Preguntar</button>
+</form>
+
+<a href="{% url 'lista_documentos' %}"><strong>Volver a mis documentos</strong></a>
