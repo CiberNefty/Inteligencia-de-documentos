@@ -43,21 +43,28 @@ def chat_documento(request, documento_id):
         defaults={'titulo': f"Chat sobre {documento.titulo}"}
     )
 
+    error = None
+
     if request.method == 'POST':
-        pregunta = request.POST.get('pregunta')
+        pregunta = request.POST.get('pregunta').strip()
 
-        Mensaje.objects.create(conversacion=conversacion, rol='user', contenido=pregunta)
-
-        fragmentos = buscar_fragmentos_relevantes(documento, pregunta)
-        respuesta_texto = generar_respuesta_chat(pregunta, fragmentos)
-
-        Mensaje.objects.create(conversacion=conversacion, rol='assistant', contenido=respuesta_texto)
-
-        return redirect('chat_documento', documento_id=documento.id)
+        if not pregunta:
+            error = "Escribi una pregunta antes de enviar."
+        else:    
+            Mensaje.objects.create(conversacion=conversacion, rol='user', contenido=pregunta)
+            try:
+                fragmentos = buscar_fragmentos_relevantes(documento, pregunta)
+                respuesta_texto = generar_respuesta_chat(pregunta, fragmentos)
+            except Exception as e:
+                respuesta_texto = "Hubo un poblema generando la respuesta. Intenta de nuevo en un momento."
+                
+            Mensaje.objects.create(conversacion=conversacion, rol='assistant', contenido=respuesta_texto)
+            return redirect('chat_documento', documento_id=documento.id)
 
     mensajes = conversacion.mensajes.all().order_by('fecha_creacion')
 
     return render(request, 'documentos/chat.html', {
         'documento': documento,
         'mensajes': mensajes,
+        'error': error
     })
