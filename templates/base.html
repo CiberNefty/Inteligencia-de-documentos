@@ -1,21 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block titulo %}Inteligencia de Documentos{% endblock %}</title>
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 </head>
 <body>
-    <header>
+
+<div class="triangulos-container"></div>
+
+<div class="consola">
+    <header class="consola-header">
+        <div class="luz-indicadora"></div>
         <nav>
-            <a href="{% url 'lista_documentos' %}">Mis documentos</a>
-            <a href="{% url 'subir_documento' %}">Subir documento</a>
+            <a href="{% url 'lista_documentos' %}">📁 Documentos</a>
+            <a href="{% url 'subir_documento' %}">⬆ Subir</a>
         </nav>
     </header>
 
-    <main>
+    <main class="pantalla">
         {% block contenido %}
         {% endblock %}
     </main>
+
+    <div class="consola-footer">
+        <span>INTELIGENCIA-DOC // v0.1</span>
+    </div>
+</div>
+
+<script defer src="{% static 'js/triangulos.js' %}"></script>
 </body>
 </html>
